@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import axiosInstance from '../axiosIinstance'
+import axiosInstance from '../axiosInstance'
 import { useNavigate } from 'react-router-dom'
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants'
 import './RegisterForm.css';
