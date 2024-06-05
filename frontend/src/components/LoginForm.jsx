@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import axiosInstance from '../axiosInstance'
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants'
+import {userAxiosInstance} from '../axiosInstance'
+import { USER_ACCESS_TOKEN, USER_REFRESH_TOKEN } from '../constants'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -14,14 +14,15 @@ function LoginForm() {
 
         try{
             setLoading(true);
-            const res = await axiosInstance.post("/token/", {
+            const res = await userAxiosInstance.post("/token/", {
                 "username":email,  
                 password
             });
+            console.log(res);
             if(res.status === 200){
-                localStorage.setItem(ACCESS_TOKEN, res.data.access)
-                localStorage.setItem(REFRESH_TOKEN, res.data.refresh)
-                navigate("/")   
+                localStorage.setItem(USER_ACCESS_TOKEN, res.data.access)
+                localStorage.setItem(USER_REFRESH_TOKEN, res.data.refresh)
+                navigate("/")  
 
     }} catch(error){
         console.log(error);

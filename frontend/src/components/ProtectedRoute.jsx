@@ -1,28 +1,29 @@
-import { Navigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { adminAxiosInstance, userAxiosInstance } from '../axiosInstance';
+import { ADMIN_ACCESS_TOKEN, ADMIN_REFRESH_TOKEN, USER_ACCESS_TOKEN, USER_REFRESH_TOKEN } from '../constants';
 import { jwtDecode } from "jwt-decode";
-import axiosInstance from "../axiosInstance";
-import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
-import { useState, useEffect } from "react";
 
-
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children, admin = false }) {
     const [isAuthorized, setIsAuthorized] = useState(null);
+    console.log("isAuthorized", isAuthorized);
+    console.log("admin", admin);
 
     useEffect(() => {
-        auth().catch(() => setIsAuthorized(false))
-    }, [])
+        auth().catch(() => setIsAuthorized(false));
+    }, []);
 
     const refreshToken = async () => {
-        const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+        const refreshToken = localStorage.getItem(admin ? ADMIN_REFRESH_TOKEN : USER_REFRESH_TOKEN);
         try {
-            const res = await axiosInstance.post("/api/token/refresh/", {
+            const res = await (admin ? adminAxiosInstance : userAxiosInstance).post('/token/refresh/', {
                 refresh: refreshToken,
             });
             if (res.status === 200) {
-                localStorage.setItem(ACCESS_TOKEN, res.data.access)
-                setIsAuthorized(true)
+                localStorage.setItem(admin ? ADMIN_ACCESS_TOKEN : USER_ACCESS_TOKEN, res.data.access);
+                setIsAuthorized(true);
             } else {
-                setIsAuthorized(false)
+                setIsAuthorized(false);
             }
         } catch (error) {
             console.log(error);
@@ -31,11 +32,13 @@ function ProtectedRoute({ children }) {
     };
 
     const auth = async () => {
-        const token = localStorage.getItem(ACCESS_TOKEN);
+        const token = localStorage.getItem(admin ? ADMIN_ACCESS_TOKEN : USER_ACCESS_TOKEN);
         if (!token) {
             setIsAuthorized(false);
             return;
         }
+        console.log("token", token);
+
         const decoded = jwtDecode(token);
         const tokenExpiration = decoded.exp;
         const now = Date.now() / 1000;

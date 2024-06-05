@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import axiosInstance from '../axiosInstance';
+import {userAxiosInstance} from '../axiosInstance';
 import { useNavigate } from 'react-router-dom';
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
 import './RegisterForm.css';
 
-function RegisterForm() {
+function RegisterForm( admin = false) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -33,14 +32,17 @@ function RegisterForm() {
                 formData.append('profile_image', profileImage);
             }
 
-            const res = await axiosInstance.post("/user/register/", formData, {
+            const res = await userAxiosInstance.post("/user/register/", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
 
             if (res.status === 201) {
-                navigate("/login");
+                if(admin){
+                    navigate("/admin/home");
+                }else{
+                navigate("/login");}
             }
         } catch (error) {
             console.log(error);

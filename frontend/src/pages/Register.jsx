@@ -1,10 +1,10 @@
 import React from 'react'
 import RegisterForm from '../components/RegisterForm'
 
-function Register() {
+function Register( admin = false) {
   return (
     <div>
-      < RegisterForm/>
+      < RegisterForm admin={admin}/>
     </div>
   )
 }
