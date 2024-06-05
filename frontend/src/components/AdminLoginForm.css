@@ -1,0 +1,56 @@
+/* AdminLogin.css */
+
+/* Admin Login Container */
+.admin-login {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Admin Login Title */
+.admin-login h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Inputs */
+.admin-login input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Error Message */
+.admin-login p {
+    margin-top: 10px;
+    color: red;
+    text-align: center;
+}
+
+/* Login Button */
+.admin-login button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.admin-login button:hover {
+    background-color: #0056b3;
+}
+
+/* Disable Login Button when loading */
+.admin-login button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -1,0 +1,56 @@
+/* Header.css */
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .header-left h1 {
+    margin: 0;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .user-info span {
+    margin-left: 5px;
+  }
+  
+  .header-right a,
+  .header-right button {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .header-right a:hover,
+  .header-right button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+  
+  .header-right button {
+    margin-left: 10px;
+  }
+  
+  .header-right button:focus {
+    outline: none;
+  }
+  

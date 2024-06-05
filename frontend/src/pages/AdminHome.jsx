@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { adminAxiosInstance } from '../axiosInstance';
+import AdminHeader from '../components/AdminHeader';
+import './AdminHome.css';
 
-const Home = () => {
+const AdminHome = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -60,54 +62,46 @@ const Home = () => {
         });
     };
 
-    const handleAddUser = () => {
-        navigate('/add_user');
-    };
-
     return (
         <div>
-            <h2>Home</h2>
-            <button className="btn btn-primary" onClick={() => navigate('/logout')}>
-                Logout
-            </button>
-            <button className="btn btn-success" onClick={handleAddUser} style={{ marginLeft: 'auto' }}>
-                Add New User
-            </button>
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.name}</td>
-                            <td>{user.phone}</td>
-                            <td>{user.address}</td>
-                            <td>
-                                <button
-                                    className="btn btn-sm btn-info me-2"
-                                    onClick={() => handleEdit(user.id)}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    className="btn btn-sm btn-danger"
-                                    onClick={() => handleDelete(user.id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
+            <AdminHeader/>
+            <div className="table-container">
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.name}</td>
+                                <td>{user.phone}</td>
+                                <td>{user.address}</td>
+                                <td className="table-actions">
+                                    <button
+                                        className="btn btn-sm btn-info"
+                                        onClick={() => handleEdit(user.id)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="btn btn-sm btn-danger"
+                                        onClick={() => handleDelete(user.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };
 
-export default Home;
+export default AdminHome;

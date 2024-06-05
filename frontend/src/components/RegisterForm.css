@@ -1,69 +1,63 @@
-/* General styles */
+/* RegisterForm.css */
+
+/* Form Container */
 .register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  /* Form elements */
-  .register-form h3 {
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  .register-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-  
-  .register-form input {
-    padding: 0.75rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
-  }
-  
-  .register-form input:focus {
-    outline: none;
-    border-color: #999;
-  }
-  
-  .register-form button {
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #307bff;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .register-form button:hover {
-    background-color: #286090;
-  }
-  
-  .register-form button:disabled {
-    background-color: #ccc;
-    cursor: default;
-  }
-  
-  /* Additional styles (optional) */
-  .register-form .mb-3 {
-    /* Adjust margin as needed */
-    margin-bottom: 1.5rem;
-  }
-  
-  .register-form .d-grid {
-    /* Adjust button alignment as needed */
-    text-align: center;
-  }
-  
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Form Title */
+.register-form h3 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form Inputs */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* File Input */
+.form-control[type="file"] {
+  padding: 8px;
+}
+
+/* Submit Button */
+.btn-primary {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Login Link */
+.register-form p {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.register-form p a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.register-form p a:hover {
+  text-decoration: underline;
+}

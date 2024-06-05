@@ -5,7 +5,6 @@ import LoginForm from '../components/LoginForm'
 function Login() {
   return (
     <div>
-        gggg
         <LoginForm/>
     </div>
   )

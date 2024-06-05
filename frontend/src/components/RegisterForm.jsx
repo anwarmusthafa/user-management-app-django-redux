@@ -1,25 +1,45 @@
 import React, { useState } from 'react';
-import {userAxiosInstance} from '../axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { userAxiosInstance } from '../axiosInstance';
+import { useNavigate, Link } from 'react-router-dom';
 import './RegisterForm.css';
 
-function RegisterForm( admin = false) {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
-    const [profileImage, setProfileImage] = useState(null);
+const RegisterForm = ({ admin = false }) => {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        confirmPassword: "",
+        name: "",
+        phone: "",
+        address: "",
+        profileImage: null
+    });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleFileChange = (e) => {
+        setFormData(prevState => ({
+            ...prevState,
+            profileImage: e.target.files[0]
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { email, password, confirmPassword, name, phone, address, profileImage } = formData;
+
         if (password !== confirmPassword) {
             alert("Passwords don't match");
             return;
         }
+
         try {
             setLoading(true);
             const formData = new FormData();
@@ -39,10 +59,11 @@ function RegisterForm( admin = false) {
             });
 
             if (res.status === 201) {
-                if(admin){
+                if (admin) {
                     navigate("/admin/home");
-                }else{
-                navigate("/login");}
+                } else {
+                    navigate("/login");
+                }
             }
         } catch (error) {
             console.log(error);
@@ -61,7 +82,9 @@ function RegisterForm( admin = false) {
                         type="email"
                         className="form-control"
                         placeholder="Enter email"
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="mb-3">
@@ -70,16 +93,20 @@ function RegisterForm( admin = false) {
                         type="password"
                         className="form-control"
                         placeholder="Enter password"
-                        onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="mb-3">
-                    <label>Confirm Password</label> 
+                    <label>Confirm Password</label>
                     <input
                         type="password"
                         className="form-control"
                         placeholder="Enter password"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="mb-3">
@@ -88,7 +115,9 @@ function RegisterForm( admin = false) {
                         type="text"
                         className="form-control"
                         placeholder="Enter name"
-                        onChange={(e) => setName(e.target.value)}
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="mb-3">
@@ -97,7 +126,9 @@ function RegisterForm( admin = false) {
                         type="text"
                         className="form-control"
                         placeholder="Enter phone"
-                        onChange={(e) => setPhone(e.target.value)}
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className="mb-3">
@@ -105,7 +136,9 @@ function RegisterForm( admin = false) {
                     <textarea
                         className="form-control"
                         placeholder="Enter address"
-                        onChange={(e) => setAddress(e.target.value)}
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
                     ></textarea>
                 </div>
                 <div className="mb-3">
@@ -113,7 +146,7 @@ function RegisterForm( admin = false) {
                     <input
                         type="file"
                         className="form-control"
-                        onChange={(e) => setProfileImage(e.target.files[0])}
+                        onChange={handleFileChange}
                     />
                 </div>
                 <div className="d-grid">
@@ -121,6 +154,9 @@ function RegisterForm( admin = false) {
                         {loading ? "Loading..." : "Register"}
                     </button>
                 </div>
+                <p className="mt-3">
+                    Already have an account? <Link to="/login">Login here</Link>
+                </p>
             </form>
         </div>
     );
