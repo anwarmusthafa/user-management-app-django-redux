@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './UpdateForm.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { adminAxiosInstance } from '../axiosInstance';
+import { useDispatch } from 'react-redux';
 
 const UpdateForm = () => {
     const [name, setName] = useState("");
@@ -9,6 +10,7 @@ const UpdateForm = () => {
     const [address, setAddress] = useState("");
     const { id } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchData = async () => {

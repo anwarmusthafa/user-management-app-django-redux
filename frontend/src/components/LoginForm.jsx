@@ -10,6 +10,7 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("")
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -29,6 +30,7 @@ function LoginForm() {
       }
     } catch (error) {
       console.log(error);
+      setError(error.response.data.detail);
     } finally {
       setLoading(false);
     }
@@ -45,6 +47,7 @@ function LoginForm() {
         <button type="submit">Login</button>
 
       </form>
+      {error && <p className='text-danger'>{error}</p>}
       <p className="mt-3">
                 If you don't have an account? <Link to="/register">SignUp here</Link>
                 </p>

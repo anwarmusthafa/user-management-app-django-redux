@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes ,parser_classes
 from rest_framework.permissions import AllowAny , IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,6 +9,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from .models import UserProfile
 from django.shortcuts import get_object_or_404
+from rest_framework.parsers import MultiPartParser, FormParser
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -64,16 +65,32 @@ def update_user(request, pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user(request):
-    if request.method == 'GET':
-        user = request.user
-        user_profile = UserProfile.objects.get(user=user)
-        serializer = UserProfileSerializer(user_profile)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+    except UserProfile.DoesNotExist:
+        return Response({'error': 'User profile not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = UserProfileSerializer(user_profile, context={'request': request})
+    return Response(serializer.data, status=status.HTTP_200_OK)
 @api_view(['GET'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def search_user(request):
     query = request.GET.get('query','')
     users = UserProfile.objects.filter(name__icontains=query)
     serializer = UserProfileSerializer(users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
+def update_profile_image(request, pk):
+    try:
+        user_profile = UserProfile.objects.get(id=pk)
+    except UserProfile.DoesNotExist:
+        return Response({'error': 'User profile not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PATCH':
+        serializer = UserProfileSerializer(user_profile, data=request.data, partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

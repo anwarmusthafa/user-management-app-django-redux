@@ -2,14 +2,22 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa';
+import { FaUserCircle, FaSignOutAlt} from 'react-icons/fa';
 import './UserHeader.css';
+import {  useDispatch} from 'react-redux';
+import { userLogout } from '../redux/userSlice';
 
-function  UserHeader({ userName}) {
+
+function  UserHeader() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userString = localStorage.getItem('user');
+  const user = userString ? JSON.parse(userString) : null;
   const Logout = () => {
     localStorage.clear();
+    dispatch(userLogout())
     navigate('/login');
+
   }
   return (
     <div className="header-container">
@@ -20,7 +28,7 @@ function  UserHeader({ userName}) {
        
         <Link to="/dashboard">
         <FaUserCircle />
-          <span>Name</span>
+          <span>{user?user.name:null}</span>
         </Link>
         <button onClick={Logout}>
           <FaSignOutAlt />

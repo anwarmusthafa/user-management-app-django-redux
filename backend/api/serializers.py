@@ -23,10 +23,18 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         UserProfile.objects.create(user=user, **profile_data)
         return user
+# serializers.py
+
 class UserProfileSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(source='user.username', read_only=True)
-    
     class Meta:
         model = UserProfile
-        fields = ['id', 'name', 'phone', 'address', 'email']
+        fields = ['id', 'name', 'phone', 'address', 'profile_image', 'user']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        request = self.context.get('request')
+        if request and instance.profile_image:
+            representation['profile_image'] = request.build_absolute_uri(instance.profile_image.url)
+        return representation
+
 
