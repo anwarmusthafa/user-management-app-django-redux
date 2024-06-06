@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { userAxiosInstance } from '../axiosInstance';
 import { USER_ACCESS_TOKEN, USER_REFRESH_TOKEN } from '../constants';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link} from 'react-router-dom';
 import './LoginForm.css'; // Import your CSS file
 
 function LoginForm() {
@@ -43,7 +43,11 @@ function LoginForm() {
         <p>Password</p> <br />
         <input type="password" onChange={(e) => setPassword(e.target.value)} /> <br />
         <button type="submit">Login</button>
+
       </form>
+      <p className="mt-3">
+                If you don't have an account? <Link to="/register">SignUp here</Link>
+                </p>
     </div>
   );
 }

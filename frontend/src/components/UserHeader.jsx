@@ -1,15 +1,20 @@
 // Header.js
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaSignOutAlt, FaHome } from 'react-icons/fa';
 import './UserHeader.css';
 
-function  UserHeader({ userName, onLogout }) {
+function  UserHeader({ userName}) {
+  const navigate = useNavigate();
+  const Logout = () => {
+    localStorage.clear();
+    navigate('/login');
+  }
   return (
     <div className="header-container">
       <div className="header-left">
-        <h1>UMS</h1>
+      <h1><Link to="/" className="custom-link">UMS</Link></h1>
       </div>
       <div className="header-right">
        
@@ -17,7 +22,7 @@ function  UserHeader({ userName, onLogout }) {
         <FaUserCircle />
           <span>Name</span>
         </Link>
-        <button onClick={onLogout}>
+        <button onClick={Logout}>
           <FaSignOutAlt />
           <span>Logout</span>
         </button>

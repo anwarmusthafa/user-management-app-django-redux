@@ -62,9 +62,12 @@ const AdminHome = () => {
         });
     };
 
+    const handleSearch = (serachedUsers) => {
+        setUsers(serachedUsers)}
+
     return (
         <div>
-            <AdminHeader/>
+            <AdminHeader onSearch={handleSearch} />
             <div className="table-container">
                 <table className="table table-striped">
                     <thead>

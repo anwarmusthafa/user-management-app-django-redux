@@ -54,3 +54,13 @@
     outline: none;
   }
   
+  .custom-link {
+    color: white;  /* Change this to your desired color */
+    text-decoration: none;
+  }
+  
+  .custom-link:hover {
+    color: #0056b3;  /* Change this to your desired hover color */
+    text-decoration: none;
+  }
+  

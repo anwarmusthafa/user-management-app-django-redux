@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { userAxiosInstance } from '../axiosInstance';
 import { useNavigate, Link } from 'react-router-dom';
 import './RegisterForm.css';
+import AdminHeader from './AdminHeader';
 
 const RegisterForm = ({ admin = false }) => {
+    console.log("admin", admin);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -42,17 +44,17 @@ const RegisterForm = ({ admin = false }) => {
 
         try {
             setLoading(true);
-            const formData = new FormData();
-            formData.append('username', email);
-            formData.append('password', password);
-            formData.append('name', name);
-            formData.append('phone', phone);
-            formData.append('address', address);
+            const formDataToSend = new FormData();
+            formDataToSend.append('username', email);
+            formDataToSend.append('password', password);
+            formDataToSend.append('name', name);
+            formDataToSend.append('phone', phone);
+            formDataToSend.append('address', address);
             if (profileImage) {
-                formData.append('profile_image', profileImage);
+                formDataToSend.append('profile_image', profileImage);
             }
 
-            const res = await userAxiosInstance.post("/user/register/", formData, {
+            const res = await userAxiosInstance.post("/user/register/", formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -73,9 +75,12 @@ const RegisterForm = ({ admin = false }) => {
     };
 
     return (
+        <> 
+        { !admin.status? null: <AdminHeader/>}
+        
         <div className='register-form'>
             <form onSubmit={handleSubmit}>
-                <h3>Register</h3>
+                <h3> { !admin.status ? "Register" : "Add New User"}</h3>
                 <div className="mb-3">
                     <label>Email address</label>
                     <input
@@ -154,11 +159,14 @@ const RegisterForm = ({ admin = false }) => {
                         {loading ? "Loading..." : "Register"}
                     </button>
                 </div>
-                <p className="mt-3">
-                    Already have an account? <Link to="/login">Login here</Link>
-                </p>
+                {!admin.status ?
+                    <p className="mt-3">
+                        Already have an account? <Link to="/login">Login here</Link>
+                    </p>: null
+                }
             </form>
         </div>
+        </>
     );
 }
 

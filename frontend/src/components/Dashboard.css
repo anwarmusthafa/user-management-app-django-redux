@@ -1,0 +1,50 @@
+.dashboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .info {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  
+  .change-image {
+    position: relative;
+  }
+  
+  #file-input {
+    display: none;
+  }
+  
+  .change-image-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .change-image-button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -10,6 +10,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AdminHome from './pages/AdminHome'
 import AdminLoginForm from './components/AdminLoginForm'
 import UpdateForm from './components/UpdateForm'
+import DashboardPage from './pages/DashboardPage';
+import Dashboard from './components/Dashboard';
+
 
 function Logout(){
   localStorage.clear()
@@ -18,7 +21,7 @@ function Logout(){
 
 function RegisterAndLogout(){
   localStorage.clear()
-  return <Register/>
+  return <Register admin = {false}/>
 }
 
 function App() {
@@ -37,6 +40,7 @@ function App() {
         <Route path='/register' element={ <RegisterAndLogout/> } />
         <Route path='/add_user' element={ <Register admin={true} /> } />
         <Route path='/edit/user/:id' element={ <ProtectedRoute admin={true}>< UpdateForm  /></ProtectedRoute>} />
+        <Route path='/dashboard' element={ <ProtectedRoute><DashboardPage/></ProtectedRoute>} />
         <Route path='*' element={ <NotFound/> } />
       </Routes>
      </BrowserRouter>

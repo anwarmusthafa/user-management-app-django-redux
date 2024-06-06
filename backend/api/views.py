@@ -60,3 +60,20 @@ def update_user(request, pk):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user(request):
+    if request.method == 'GET':
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        serializer = UserProfileSerializer(user_profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def search_user(request):
+    query = request.GET.get('query','')
+    users = UserProfile.objects.filter(name__icontains=query)
+    serializer = UserProfileSerializer(users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

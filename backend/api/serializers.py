@@ -24,6 +24,9 @@ class UserSerializer(serializers.ModelSerializer):
         UserProfile.objects.create(user=user, **profile_data)
         return user
 class UserProfileSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(source='user.username', read_only=True)
+    
     class Meta:
         model = UserProfile
-        fields = ['id','name', 'phone', 'address']
+        fields = ['id', 'name', 'phone', 'address', 'email']
+
